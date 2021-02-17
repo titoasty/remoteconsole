@@ -1,0 +1,186 @@
+@function str-replace($string, $search, $replace: '') {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@function autosize($size, $refSize: 1920) {
+    @return 100vw * $size / $refSize;
+}
+
+@mixin autosize-width($width, $refWidth: 1920) {
+    width: scaled($width, $refWidth);
+}
+
+@mixin autosize-height($height, $refHeight: 1080) {
+    height: scaled($height, $refHeight);
+}
+
+@mixin autosize-size($width, $height) {
+    @include autosize-width($width);
+    @include autosize-height($height);
+}
+
+@function autosize-translate3d($x, $y, $z) {
+    $x: autosize($x);
+    $y: autosize($y);
+    $z: autosize($z);
+    @return translate3d($x, $y, $z)
+}
+
+@function autosize-4($a, $b, $c, $d) {
+    @return autosize($a) autosize($b) autosize($c) autosize($d);
+}
+
+@mixin center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin center-absolute {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+@mixin full-absolute {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@mixin full-fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@mixin background-cover($url) {
+    background-image: url($url);
+    // @include background-image-webp($url);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@mixin background-contain($url) {
+    background-image: url($url);
+    // @include background-image-webp($url);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@mixin font-default($size: 1rem) {
+    font-family: Inconsolata, monospace;
+    font-size: $size;
+}
+
+@mixin background-image-webp($url) {
+    $urlWebp: str-replace(str-replace(str-replace($url, '.png', '.webp'), '.jpeg', '.webp'), '.jpg', '.webp');
+    background-image: url($urlWebp);
+    background-image: $url;
+}
+
+@mixin text-stroke($color: #000, $size: 1px) {
+    text-shadow: -#{$size} -#{$size} 0 $color,
+    0 -#{$size} 0 $color,
+    #{$size} -#{$size} 0 $color,
+    #{$size} 0 0 $color,
+    #{$size} #{$size} 0 $color,
+    0 #{$size} 0 $color,
+    -#{$size} #{$size} 0 $color,
+    -#{$size} 0 0 $color;
+}
+
+@mixin optional-at-root($sel) {
+    @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+        @content;
+    }
+}
+
+@mixin placeholder {
+    @include optional-at-root('::-webkit-input-placeholder') {
+        @content;
+    }
+
+    @include optional-at-root(':-moz-placeholder') {
+        @content;
+    }
+
+    @include optional-at-root('::-moz-placeholder') {
+        @content;
+    }
+
+    @include optional-at-root(':-ms-input-placeholder') {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media(orientation: portrait) {
+        @content;
+    }
+
+    @media(orientation:landscape) and (max-device-width: 768px) {
+        @content;
+    }
+}
+
+@mixin aspect-ratio($width, $height) {
+    position: relative;
+
+    &:before {
+        display: block;
+        content: "";
+        width: 100%;
+        padding-top: ($height / $width) * 100%;
+    }
+
+    >.content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+@mixin transition($prop: all, $duration: 0.6s, $ease: $easeOutCirc, $delay: 0s) {
+    transition: $prop $duration $ease $delay;
+}
+
+
+@mixin hover-desktop {
+    @media(hover: hover) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin hover-mobile {
+    &:active {
+        @content;
+    }
+}
+
+@mixin hover {
+    @include hover-desktop {
+        @content;
+    }
+
+    @include hover-mobile {
+        @content;
+    }
+}

@@ -1,0 +1,11 @@
+.line {
+    .title {
+        &:after {
+            content: ' '
+        }
+    }
+
+    >div:first-of-type {
+        display: inline-block;
+    }
+}

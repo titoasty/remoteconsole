@@ -1,0 +1,86 @@
+@import './core';
+@import './core/fonts';
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    @include font-default(10px);
+    color: var(--color-text);
+
+    background-color: var(--color-back);
+
+    overflow: hidden;
+    touch-action: none;
+
+    @media (max-height: 767px) {
+        font-size: 8px;
+    }
+}
+
+:root {
+    --color-back: #ffffff;
+    --color-text: #000000;
+    --color-text-rgb: 0, 0, 0;
+    --color-red: #E73A23;
+    --color-red-rgb: 231, 58, 35;
+    --color-yellow: #c4af3c;
+    --color-yellow-rgb: 236, 211, 70;
+    --color-yellow-dark: #7c6e1b;
+    --color-blue: #3083DC;
+    --color-blue-rgb: 48, 131, 220;
+    --color-green: #3ead28;
+    --color-green-rgb: 62, 173, 40;
+    --color-gray: #a0a0a0;
+
+    &.theme_dark {
+        --color-back: #202430;
+        --color-text: #e0e0e0;
+        --color-text-rgb: 224, 224, 224;
+        --color-red: #E73A23;
+        --color-yellow-dark: #c4af3c;
+        --color-gray: #808080;
+    }
+}
+
+* {
+    user-select: none;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+input,
+input:before,
+input:after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+}
+
+a {
+    color: var(--color-text);
+    font-weight: bold;
+    text-decoration: underline;
+
+    &:active,
+    &:link,
+    &:visited {
+        // text-decoration: none;
+    }
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}

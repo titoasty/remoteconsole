@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es5",
+        "baseUrl": "./src/js",
+        "outDir": "./dist/",
+        "sourceMap": true,
+        // "noImplicitAny": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "types": [
+            "node"
+        ],
+        "isolatedModules": false,
+        "noEmitOnError": false,
+        // "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "allowUnreachableCode": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true
+    },
+    "include": [
+        "src/js/**/*"
+    ],
+    "exclude": [
+        "./node_modules/*"
+    ]
+}

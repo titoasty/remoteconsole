@@ -1,0 +1,56 @@
+.consoleinput {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+
+    .input {
+        flex: 1;
+
+        border: none;
+        resize: none;
+
+        @include font-default;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        padding: 1rem 1rem 1rem 3rem;
+
+        background: transparent;
+        color: var(--color-text);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .btnSend {
+        width: 3rem;
+        height: 3rem;
+
+        margin-top: 0.8rem;
+        margin-right: 0.8rem;
+
+        background-color: $blue;
+        border-radius: 50%;
+        box-shadow: 0 0.1rem 0.6rem 0 rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        @include center-flex;
+
+        >* {
+            position: relative;
+            left: 0.1rem;
+            width: 40%;
+            height: 40%;
+        }
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 1.2rem;
+        top: 1.2rem;
+        width: 1.2rem;
+        height: 1.6rem;
+        @include background-contain('./images/arrow.svg');
+    }
+}

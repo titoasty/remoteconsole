@@ -1,0 +1,10 @@
+.title {
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.content {}

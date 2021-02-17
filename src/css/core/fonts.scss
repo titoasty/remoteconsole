@@ -1,0 +1,12 @@
+@mixin font($name, $alias) {
+    $url: '../fonts/';
+
+    @font-face {
+        font-family: $alias;
+        // src: url($url + $name + '.eot?#iefix') format('embedded-opentype'), url($url + $name + '.woff') format('woff'), url($url + $name + '.ttf') format('truetype'), url($url + $name + '.svg#3ds-Light') format('svg');
+        src: url($url + $name + '.eot?#iefix') format('embedded-opentype'), url($url + $name + '.woff') format('woff'), url($url + $name + '.ttf') format('truetype');
+        font-style: normal;
+    }
+}
+
+// @include font('Arsilon', 'arsilon');
