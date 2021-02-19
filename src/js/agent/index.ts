@@ -30,8 +30,6 @@ function bindGlobalError(client: Client) {
     // };
 
     window.addEventListener('error', (evt: ErrorEvent) => {
-        origConsole.log(evt);
-        origConsole.log(evt.message);
         client.exception(evt.message, evt.lineno, evt.colno, evt.error?.stack);
         // console.error(`${evt.message} (${evt.filename}, line ${evt.lineno})`, evt.stack);
     });
@@ -108,6 +106,7 @@ client.onEval.add((text: string) => {
         client.eval(eval(text));
     } catch (err) {
         client.exception('Exception: ' + err.message, err.lineno, err.colno, err.stack);
+        origConsole.error(err);
     }
 });
 
