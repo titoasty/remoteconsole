@@ -3,6 +3,7 @@ import Signal from 'util/Signal';
 
 export default class RemoteConsole {
     socket: Socket;
+    private _channelID: string;
     onReady = new Signal<[string]>();
     onAgentReady = new Signal<[string]>();
     onAgentClose = new Signal<[string]>();
@@ -21,6 +22,7 @@ export default class RemoteConsole {
 
         this.socket.on('connect', () => {
             this.socket.on('ready', (channelID: string) => {
+                this._channelID = channelID;
                 this.onReady.emit(channelID);
             });
 
@@ -78,5 +80,9 @@ export default class RemoteConsole {
 
     eval(text: string) {
         this.socket.emit('eval', text);
+    }
+
+    get channelID() {
+        return this._channelID;
     }
 }

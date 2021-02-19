@@ -6,8 +6,10 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "webpack_dev": "SERVER_URL=ws://localhost:8080 webpack serve --hot --mode=development --config ./toolchain/webpack.config.js",
+    "webpack_dev_live": "SERVER_URL=wss://server.remoteconsole.dev webpack serve --hot --mode=development --config ./toolchain/webpack.config.js",
     "webpack_build": "SERVER_URL=wss://server.remoteconsole.dev webpack --mode=production --config ./toolchain/webpack.config.js",
     "dev": "npm run clean && npm run webpack_dev",
+    "dev_live": "npm run clean && npm run webpack_dev_live",
     "build": "npm run clean && npm run webpack_build"
   },
   "devDependencies": {

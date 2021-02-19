@@ -38,6 +38,9 @@ function getTypeFromHttpStatus(status: number) {
 }
 
 let remoteConsole: RemoteConsole;
+export function getRemoteConsole() {
+    return remoteConsole;
+}
 
 export default function () {
     function onSubmit(text: string) {

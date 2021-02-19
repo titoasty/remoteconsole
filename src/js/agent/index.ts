@@ -1,5 +1,7 @@
 import Client from './Client';
+// import './tests';
 
+const serverURL = new URL(process.env.SERVER_URL);
 const origConsole: any = {};
 
 function bindConsole(client: Client) {
@@ -28,7 +30,9 @@ function bindGlobalError(client: Client) {
     // };
 
     window.addEventListener('error', (evt: ErrorEvent) => {
-        client.exception(evt.message, evt.lineno, evt.colno, evt.error.stack);
+        origConsole.log(evt);
+        origConsole.log(evt.message);
+        client.exception(evt.message, evt.lineno, evt.colno, evt.error?.stack);
         // console.error(`${evt.message} (${evt.filename}, line ${evt.lineno})`, evt.stack);
     });
 }
@@ -71,6 +75,11 @@ function bindXHR(client: Client) {
         const method = args[0];
         const url = args[1];
 
+        // ignore calls to remoteconsole server
+        if (url.indexOf(serverURL.hostname) >= 0) {
+            return;
+        }
+
         client.xhrOpen(url, method);
 
         this.addEventListener('readystatechange', function () {
@@ -80,23 +89,6 @@ function bindXHR(client: Client) {
         });
     };
 }
-
-// @ts-ignore
-window.test = function () {
-    console.log(new Error().stack);
-};
-
-// @ts-ignore
-window.test2 = function () {
-    throw 'TestException';
-};
-
-// @ts-ignore
-window.testXHR = function (code: number = 200) {
-    const req = new XMLHttpRequest();
-    req.open('GET', 'https://httpstat.us/' + code, true);
-    req.send(null);
-};
 
 // get channel id
 const ATTRIBUTE_NAME = 'data-remoteconsole-channel';
@@ -112,7 +104,11 @@ client.onReady.add(() => {
 });
 
 client.onEval.add((text: string) => {
-    client.eval(eval(text));
+    try {
+        client.eval(eval(text));
+    } catch (err) {
+        client.exception('Exception: ' + err.message, err.lineno, err.colno, err.stack);
+    }
 });
 
 client.connect(process.env.SERVER_URL);
